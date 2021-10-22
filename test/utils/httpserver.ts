@@ -101,6 +101,9 @@ export class HttpServer {
    */
   public fetch(requestPath: string, opts?: RequestInit): Promise<Response> {
     const address = ensureAddress(this.hs, "http")
+    if (typeof address === "string") {
+      throw new Error("Cannot fetch socket path")
+    }
     address.pathname = requestPath
 
     return nodeFetch(address.toString(), opts)
